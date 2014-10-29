@@ -1,4 +1,16 @@
-define([ 'angular' ], function (ng) {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([ 'module', 'angular' ], function (module, angular) {
+            module.exports = factory(angular);
+        });
+    } else {
+        if (!root.mp) {
+            root.mp = {};
+        }
+
+        root.mp.action = factory(root.angular);
+    }
+}(this, function (angular) {
     'use strict';
 
     function containsDom(parent, dom) {
@@ -13,30 +25,31 @@ define([ 'angular' ], function (ng) {
         return false;
     }
 
-    // child links must use tabindex=0 to capture focus in Webkit and avoiding triggering blur
-    ng.module('mp.deepBlur', []).directive('deepBlur', [ '$timeout', function ($timeout) {
-        return {
-            restrict: 'A',
-            controller: [ '$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-                var leaveExpr = $attrs.deepBlur,
-                    dom = $element[0];
+    return angular.module('mp.deepBlur', [])
+        // child links must use tabindex=0 to capture focus in Webkit and avoiding triggering blur
+        .directive('deepBlur', [ '$timeout', function ($timeout) {
+            return {
+                restrict: 'A',
+                controller: [ '$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+                    var leaveExpr = $attrs.deepBlur,
+                        dom = $element[0];
 
-                function onBlur(e) {
-                    if (!containsDom(dom, e.relatedTarget)) {
-                        // wrap in a timeout to avoid digest cycle conflict with other event handlers
-                        $timeout(function () {
-                            $scope.$apply(leaveExpr);
-                        }, 10);
+                    function onBlur(e) {
+                        if (!containsDom(dom, e.relatedTarget)) {
+                            // wrap in a timeout to avoid digest cycle conflict with other event handlers
+                            $timeout(function () {
+                                $scope.$apply(leaveExpr);
+                            }, 10);
+                        }
                     }
-                }
 
-                if (dom.addEventListener) {
-                    dom.addEventListener('blur', onBlur, true);
-                } else {
-                    // For IE8
-                    dom.attachEvent('focusout', onBlur);
-                }
-            } ]
-        };
-    } ]);
-});
+                    if (dom.addEventListener) {
+                        dom.addEventListener('blur', onBlur, true);
+                    } else {
+                        // For IE8
+                        dom.attachEvent('focusout', onBlur);
+                    }
+                } ]
+            };
+        } ]);
+}));
