@@ -8,7 +8,7 @@
             root.mp = {};
         }
 
-        root.mp.action = factory(root.angular);
+        root.mp.deepBlur = factory(root.angular);
     }
 }(this, function (angular) {
     'use strict';
