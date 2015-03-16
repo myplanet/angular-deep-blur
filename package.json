@@ -1,0 +1,23 @@
+{
+  "name": "angular-deep-blur",
+  "version": "1.0.2",
+  "description": "Child-aware blur handler for Angular",
+  "main": "angular-deep-blur.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/myplanetdigital/angular-deep-blur.git"
+  },
+  "keywords": [
+    "angular",
+    "focus",
+    "blur"
+  ],
+  "author": "Ates Goral <ates@magnetiq.com> (http://magnetiq.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/myplanetdigital/angular-deep-blur/issues"
+  }
+}
