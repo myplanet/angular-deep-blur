@@ -126,7 +126,7 @@
 
                     <pre><code class="lang-html"><!--
 -->&lt;div ng-init=&quot;isExpanded = true&quot; deep-blur=&quot;isExpanded = false&quot;&gt;
-    &lt;button ng-click=&quot;isExpanded = !isExpanded&quot; ng-attr-expanded=&quot;&#123;&#123; isExpanded }}&quot;&gt;
+    &lt;button ng-click=&quot;isExpanded = !isExpanded&quot; ng-attr-expanded=&quot;{{ '{{ isExpanded }' + '}' }}&quot;&gt;
         Toggle
     &lt;/button&gt;
     &lt;ul ng-show=&quot;isExpanded&quot;&gt;
