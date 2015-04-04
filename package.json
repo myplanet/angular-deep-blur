@@ -1,6 +1,6 @@
 {
   "name": "angular-deep-blur",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Child-aware blur handler for Angular",
   "main": "angular-deep-blur.js",
   "repository": {
