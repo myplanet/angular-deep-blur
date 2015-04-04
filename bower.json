@@ -2,9 +2,10 @@
   "name": "angular-deep-blur",
   "main": "angular-deep-blur.js",
   "version": "1.0.4",
-  "homepage": "https://github.com/myplanetdigital/angular-deep-blur",
+  "homepage": "https://github.com/myplanet/angular-deep-blur",
   "authors": [
-    "Nick Matantsev <nick.m@myplanet.com>"
+    "Nick Matantsev <nick.m@myplanet.com>",
+    "Ates Goral <ates.g@myplanet.com>"
   ],
   "description": "Child-aware blur handler for Angular",
   "moduleType": [
@@ -20,10 +21,6 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "**/.*"
   ]
 }
