@@ -10,7 +10,9 @@
   "keywords": [
     "angular",
     "focus",
-    "blur"
+    "blur",
+    "dropdown",
+    "popup"
   ],
   "author": "Nick Matantsev <nick.m@myplanet.com>",
   "contributors": [
