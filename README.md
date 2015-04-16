@@ -1,5 +1,5 @@
 # angular-deep-blur
 
-angular-deep-blur detects when an element has lost focus and none of its children is the recipient of focus. This is especially useful when you want to hide a dropdown when the dropdown is blurred by the focusing of another element outside the dropdown, because the focusing of an element inside the dropdown can be considered as the dropdown still having focus.
+angular-deep-blur detects when neither the element nor any of its children are in focus (i.e. the element is blurred by the focusing of another element outside the element.) This is especially useful if you want to hide a dropdown on blur.
 
 [Demo and documentation](http://myplanet.github.io/angular-deep-blur/)
