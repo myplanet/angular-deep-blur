@@ -37,8 +37,9 @@
                         dom = $element[0];
 
                     function onBlur(e) {
-                        if (!containsDom(dom, e.relatedTarget || e.toElement)) { // toElement for IE8
-                            // wrap in a timeout to avoid digest cycle conflict with other event handlers
+                        // toElement for IE8
+                        // explicitOriginalTarget for Firefox
+                        if (!containsDom(dom, e.relatedTarget || e.explicitOriginalTarget || e.toElement)) {
                             $timeout(function () {
                                 $scope.$apply(leaveExpr);
                             }, 10);
@@ -48,8 +49,7 @@
                     if (dom.addEventListener) {
                         dom.addEventListener('blur', onBlur, true);
                     } else {
-                        // For IE8
-                        dom.attachEvent('onfocusout', onBlur);
+                        dom.attachEvent('onfocusout', onBlur); // For IE8
                     }
                 } ]
             };
