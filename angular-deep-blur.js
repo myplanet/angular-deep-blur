@@ -41,9 +41,10 @@
                         // explicitOriginalTarget for Firefox
                         // document.activeElement for IE 11
                         var targetElement = e.relatedTarget || e.explicitOriginalTarget || document.activeElement;
+                        
                         if (!containsDom(dom, targetElement)) {
                             $timeout(function () {
-                              $scope.$apply(leaveExpr);
+                                $scope.$apply(leaveExpr);
                             }, 10);
                         }
                     }
