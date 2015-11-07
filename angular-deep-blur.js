@@ -78,5 +78,31 @@
                     }
                 } ]
             };
+        } ])
+
+        .directive('deepChange', [ '$timeout', function ($timeout) {
+            return {
+                restrict: 'A',
+                controller: [ '$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+                    var enterExpr = $attrs.deepChange,
+                        dom = $element[0];
+
+                    function onFocus(e) {
+                        if (!containsDom(dom, e.relatedTarget || e.toElement)) { // toElement for IE8
+                            // wrap in a timeout to avoid digest cycle conflict with other event handlers
+                            $timeout(function () {
+                                $scope.$apply(enterExpr);
+                            }, 10);
+                        }
+                    }
+
+                    if (dom.addEventListener) {
+                        dom.addEventListener('focus', onFocus, true);
+                    } else {
+                        // For IE8
+                        dom.attachEvent('onfocusin', onFocus);
+                    }
+                } ]
+            };
         } ]);
 }));
