@@ -38,10 +38,9 @@
 
                     function onBlur(e) {
                         // e.relatedTarget for Chrome
-                        // explicitOriginalTarget for Firefox
                         // document.activeElement for IE 11
-                        var targetElement = e.relatedTarget || e.explicitOriginalTarget || document.activeElement;
-                        
+                        var targetElement = e.relatedTarget || document.activeElement;
+
                         if (!containsDom(dom, targetElement)) {
                             $timeout(function () {
                                 $scope.$apply(leaveExpr);
