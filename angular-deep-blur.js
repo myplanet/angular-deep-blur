@@ -32,7 +32,8 @@
         .directive('deepBlur', [ '$timeout', function ($timeout) {
             return {
                 restrict: 'A',
-                controller: [ '$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+                controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+                    var isClickingChild = false;
                     var leaveExpr = $attrs.deepBlur,
                         dom = $element[0];
 
@@ -42,18 +43,30 @@
                         var targetElement = e.relatedTarget || document.activeElement;
 
                         if (!containsDom(dom, targetElement)) {
-                            $timeout(function () {
-                                $scope.$apply(leaveExpr);
+                            $timeout(function() {
+                                if (!isClickingChild) {
+                                    $scope.$apply(leaveExpr);
+                                }
+                                isClickingChild = false;
                             }, 10);
                         }
                     }
 
+                    function onClick() {
+                        //debugger
+                        isClickingChild = true;
+                        $timeout(function() {
+                            isClickingChild = false;
+                        }, 200);
+                    }
+
                     if (dom.addEventListener) {
                         dom.addEventListener('blur', onBlur, true);
+                        dom.addEventListener('click', onClick, true);
                     } else {
                         dom.attachEvent('onfocusout', onBlur); // For IE8
                     }
-                } ]
+        }]
             };
         } ])
         .name;  // pass back as dependency name
