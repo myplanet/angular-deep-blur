@@ -1,6 +1,6 @@
-(function(root, factory) {
+(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['module', 'angular'], function(module, angular) {
+        define([ 'module', 'angular' ], function (module, angular) {
             module.exports = factory(angular);
         });
     } else if (typeof module === 'object') {
@@ -12,7 +12,7 @@
 
         root.mp.deepBlur = factory(root.angular);
     }
-}(this, function(angular) {
+}(this, function (angular) {
     'use strict';
 
     function containsDom(parent, dom) {
@@ -29,45 +29,45 @@
 
     return angular.module('mp.deepBlur', [])
         // child links must use tabindex=0 to capture focus in Webkit and avoiding triggering blur
-        .directive('deepBlur', ['$timeout', function($timeout) {
+        .directive('deepBlur', [ '$timeout', function ($timeout) {
             return {
                 restrict: 'A',
                 controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
-                    var isClickingChild = false;
-                    var leaveExpr = $attrs.deepBlur,
-                        dom = $element[0];
+            var isClickingChild = false;
+            var leaveExpr = $attrs.deepBlur,
+                dom = $element[0];
 
-                    function onBlur(e) {
-                        // e.relatedTarget for Chrome
-                        // document.activeElement for IE 11
-                        var targetElement = e.relatedTarget || document.activeElement;
+            function onBlur(e) {
+                // e.relatedTarget for Chrome
+                // document.activeElement for IE 11
+                var targetElement = e.relatedTarget || document.activeElement;
 
-                        if (!containsDom(dom, targetElement)) {
-                            $timeout(function() {
-                                if (!isClickingChild) {
-                                    $scope.$apply(leaveExpr);
-                                }
-                                isClickingChild = false;
-                            }, 10);
+                if (!containsDom(dom, targetElement)) {
+                    $timeout(function() {
+                        if (!isClickingChild) {
+                            $scope.$apply(leaveExpr);
                         }
-                    }
+                        isClickingChild = false;
+                    }, 10);
+                }
+            }
 
-                    function onClick() {
-                        //debugger
-                        isClickingChild = true;
-                        $timeout(function() {
-                            isClickingChild = false;
-                        }, 200);
-                    }
+            function onClick() {
+                //debugger
+                isClickingChild = true;
+                $timeout(function() {
+                    isClickingChild = false;
+                }, 200);
+            }
 
-                    if (dom.addEventListener) {
-                        dom.addEventListener('blur', onBlur, true);
-                        dom.addEventListener('click', onClick, true);
-                    } else {
-                        dom.attachEvent('onfocusout', onBlur); // For IE8
-                    }
-                }]
+            if (dom.addEventListener) {
+                dom.addEventListener('blur', onBlur, true);
+                dom.addEventListener('click', onClick, true);
+            } else {
+                dom.attachEvent('onfocusout', onBlur); // For IE8
+            }
+        }]
             };
-        }])
-        .name; // pass back as dependency name
+        } ])
+        .name;  // pass back as dependency name
 }));
