@@ -33,39 +33,39 @@
             return {
                 restrict: 'A',
                 controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
-            var isClickingChild = false;
-            var leaveExpr = $attrs.deepBlur,
-                dom = $element[0];
+                    var isClickingChild = false;
+                    var leaveExpr = $attrs.deepBlur,
+                        dom = $element[0];
 
-            function onBlur(e) {
-                // e.relatedTarget for Chrome
-                // document.activeElement for IE 11
-                var targetElement = e.relatedTarget || document.activeElement;
+                    function onBlur(e) {
+                        // e.relatedTarget for Chrome
+                        // document.activeElement for IE 11
+                        var targetElement = e.relatedTarget || document.activeElement;
 
-                if (!containsDom(dom, targetElement)) {
-                    $timeout(function() {
-                        if (!isClickingChild) {
-                            $scope.$apply(leaveExpr);
+                        if (!containsDom(dom, targetElement)) {
+                            $timeout(function() {
+                                if (!isClickingChild) {
+                                    $scope.$apply(leaveExpr);
+                                }
+                                isClickingChild = false;
+                            }, 10);
                         }
-                        isClickingChild = false;
-                    }, 10);
-                }
-            }
+                    }
 
-            function onClick() {
-                //debugger
-                isClickingChild = true;
-                $timeout(function() {
-                    isClickingChild = false;
-                }, 200);
-            }
+                    function onClick() {
+                        //debugger
+                        isClickingChild = true;
+                        $timeout(function() {
+                            isClickingChild = false;
+                        }, 200);
+                    }
 
-            if (dom.addEventListener) {
-                dom.addEventListener('blur', onBlur, true);
-                dom.addEventListener('click', onClick, true);
-            } else {
-                dom.attachEvent('onfocusout', onBlur); // For IE8
-            }
+                    if (dom.addEventListener) {
+                        dom.addEventListener('blur', onBlur, true);
+                        dom.addEventListener('click', onClick, true);
+                    } else {
+                        dom.attachEvent('onfocusout', onBlur); // For IE8
+                    }
         }]
             };
         } ])
